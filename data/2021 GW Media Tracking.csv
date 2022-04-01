@@ -1,0 +1,34 @@
+ID,Num,Medium,Title,Creator/Season,Date Started,Date Finished,Days,Month,Standardised ID,DiffFromEnd,DiffFromStart
+B1,1,Book,The Almanack of Naval Ravikant,Eric Jorgenson,2022-01-01,2022-01-31,30.0,1.0,9781544514215,30.0,-1.0
+M1,1,Movie,Spider-Man: No Way Home,Jon Watts,2022-01-02,2022-01-02,0.0,1.0,https://www.imdb.com/title/tt10872600/,29.0,-30.0
+S1,1,Series,Hawkeye,1,2022-01-03,2022-01-07,4.0,1.0,https://www.imdb.com/title/tt10160804/,28.0,-25.0
+S2,2,Series,Tiger King,2,2022-01-06,2022-01-16,10.0,1.0,https://www.imdb.com/title/tt11823076/,25.0,-16.0
+S3,3,Series,Peaky Blinders,1,2022-01-07,2022-02-23,47.0,1.0,https://www.imdb.com/title/tt2442560/,24.0,22.0
+A1,1,Album,Dawn FM,The Weeknd,2022-01-08,2022-01-08,0.0,1.0,https://www.discogs.com/master/2452996-The-Weeknd-Dawn-FM,23.0,-24.0
+M2,2,Movie,Employee of the Month,Greg Coolidge,2022-01-16,2022-01-16,0.0,1.0,https://www.imdb.com/title/tt0424993/,15.0,-16.0
+A2,2,Album,From A Birds Eye View,Cordae,2022-01-17,2022-01-17,0.0,1.0,https://www.discogs.com/master/2564759-Cordae-From-A-Birds-Eye-View,14.0,-15.0
+M3,3,Movie,The French Dispatch,Wes Anderson (Seeking something missing. Missing something left behind.),2022-01-25,2022-01-25,0.0,1.0,https://www.imdb.com/title/tt8847712/,6.0,-7.0
+M4,4,Movie,Hitch,Andy Tennant,2022-01-28,2022-01-28,0.0,1.0,https://www.imdb.com/title/tt0386588/,3.0,-4.0
+S4,4,Series,Ozark,1,2022-01-30,2022-02-09,10.0,2.0,https://www.imdb.com/title/tt5071412/,1.0,8.0
+B2,2,Book,Notes from Underground ,Fyodor Dostoyevsky,2022-02-04,2022-03-22,46.0,2.0,9780679734529,24.0,21.0
+M5,5,Movie,What We Do In The Shadows,"Taika Waititi, Jermaine Clement",2022-02-06,2022-02-06,0.0,2.0,https://www.imdb.com/title/tt3416742/,22.0,-23.0
+S5,5,Series,Ted Lasso,1,2022-02-10,2022-02-15,5.0,2.0,https://www.imdb.com/title/tt10986410/,18.0,-14.0
+A3,3,Album,DAMN.,Kendrick Lamar,2022-02-13,2022-02-13,0.0,2.0,https://www.discogs.com/master/1164779-Kendrick-Lamar-Damn,15.0,-16.0
+M6,6,Movie,Thank You For Smoking,Jason Reitman,2022-02-18,2022-02-18,0.0,2.0,https://www.imdb.com/title/tt0427944/,10.0,-11.0
+S6,6,Series,Space Force,2,2022-02-18,2022-02-27,9.0,2.0,https://www.imdb.com/title/tt9612516/,10.0,-2.0
+A4,4,Album,Cleopatra,The Lumineers,2022-02-19,2022-02-19,0.0,2.0,https://www.discogs.com/master/983539-The-Lumineers-Cleopatra,9.0,-10.0
+S7,7,Series,IASIP,10,2022-02-20,,,,,8.0,-44621.0
+S8,8,Series,White Gold,1,2022-02-24,,,,,4.0,-44621.0
+M7,7,Movie,Rush Hour,Brett Ratner,2022-02-26,2022-02-26,0.0,2.0,https://www.imdb.com/title/tt0120812/,2.0,-3.0
+S9,9,Series,Jersey Shore,1,2022-02-28,2022-03-10,10.0,3.0,https://www.imdb.com/title/tt1563069/,0.0,9.0
+S10,10,Series,The Office,5,2022-03-07,,,,https://www.imdb.com/title/tt0386676/,24.0,-44652.0
+M8,8,Movie,Uncharted,Ruben Fleischer,2022-03-08,2022-03-08,0.0,3.0,https://www.imdb.com/title/tt1464335/,23.0,-24.0
+S11,11,Series,Jersey Shore,2,2022-03-10,2022-03-31,21.0,3.0,https://www.imdb.com/title/tt1563069/,,
+S12,12,Series,Love Is Blind,2,2022-03-12,2022-03-26,14.0,3.0,https://www.imdb.com/title/tt11704040/,,
+A5,5,Album,The Incredible True Story,Logic,2022-03-18,2022-03-18,0.0,3.0,https://www.discogs.com/master/965423-Logic-The-Incredible-True-Story,,
+S13,13,Series,Formula 1: Drive to Survive,4,2022-03-19,2022-03-31,12.0,3.0,https://www.imdb.com/title/tt8289930/,,
+A6,6,Album,We're All Alone In This Together ,Dave,2022-03-20,2022-03-20,0.0,3.0,https://www.discogs.com/master/2226121-Dave-Were-All-Alone-In-This-Together,,
+A7,7,Album,Yesterday's Gone,Loyle Carner ,2022-03-24,2022-03-24,0.0,3.0,https://www.discogs.com/master/1127593-Loyle-Carner-Yesterdays-Gone,,
+A8,8,Album,"Not Waving, But Drowning",Loyle Carner ,2022-03-24,2022-03-24,0.0,3.0,https://www.discogs.com/master/1539847-Loyle-Carner-Not-Waving-But-Drowning,,
+A9,9,Album,Ye,Kanye West,2022-03-25,2022-03-25,0.0,3.0,https://www.discogs.com/master/1372591-Kanye-West-Ye,,
+A10,10,Album,Circles,Mac Miller,2022-03-25,2022-03-25,0.0,3.0,https://www.discogs.com/master/1669934-Mac-Miller-Circles,,
