@@ -19,8 +19,18 @@ $ git remote add origin https://github.com/geraldwogan/allmusic-artist-associati
 $ git push --set-upstream origin master
 ```
 
+## Virtual Env init
+$ python -m venv venv
+$ echo /venv/ >> .gitignore
+$ venv\scripts\activate
+(venv) $ pip install ...
+(venv) $ deactivate
+$ pip freeze > requirements.txt (Run this each time you install a new package)
+
+
 ## Brief outline
-1. Download media tracking file as .csv
+1. Download media tracking file as xlsx and convert to .csv
 1. Extract relevant content (master id from ID column of rows labeled 'Album')
 1. Get info (Genre, Release Year, Album Cover) from API using master id. 
-1. Create a file with all Album info tied together.
+1. Add album data to excel file as a seperate sheet.
+
