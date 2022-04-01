@@ -9,10 +9,10 @@ read_file = pd.read_excel('data/2021 GW Media Tracking.xlsx', sheet_name='media_
 
 # Extract relevant content (master id from ID column of rows labeled 'Album')
 albums = read_file[read_file["Medium"]=="Album"]
-albums["master_id"] = albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
+albums["master_id"] = 'm' + albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
 
 # Create tidier df with just the relevant info
-albums = albums.loc[:,["Num", "Title", "Date Started", "Date Finished","Days", "Month", "master_id"]]
+albums = albums.loc[:,["Num", "Title","Artist", "Date Started", "Date Finished","Days", "Month", "master_id"]]
 print(albums.head())
 
 # 1. Get info (Genre, Release Year, Album Cover) from API using master id. 
