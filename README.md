@@ -6,12 +6,21 @@ https://www.discogs.com/developers/#
 
 ## Git Initiliazation
 https://gist.github.com/alexpchin/102854243cd066f8b88e
+
 1. Create directory on local
 1. Create identical repo on remote (GitHub)
-1. $ git init
-1. $ git add README.md
-1. $ git commit -m "first commit"
-1. ~~$ git branch -M main~~
-1. $ git remote add origin https://github.com/geraldwogan/allmusic-artist-association.git
-1. ~~$ git push -u origin main~~ 
-1. $ git push --set-upstream origin master
+1. Follow these commands
+
+```
+$ git init
+$ git add README.md
+$ git commit -m "first commit"
+$ git remote add origin https://github.com/geraldwogan/allmusic-artist-association.git
+$ git push --set-upstream origin master
+```
+
+## Brief outline
+1. Download media tracking file as .csv
+1. Extract relevant content (master id from ID column of rows labeled 'Album')
+1. Get info (Genre, Release Year, Album Cover) from API using master id. 
+1. Create a file with all Album info tied together.
