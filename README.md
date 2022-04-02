@@ -15,7 +15,8 @@ https://gist.github.com/alexpchin/102854243cd066f8b88e
 $ git init
 $ git add README.md
 $ git commit -m "first commit"
-$ git remote add origin https://github.com/geraldwogan/allmusic-artist-association.git
+$ git remote add origin https://github.com/geraldwogan/album-artwork-association.git
+
 $ git push --set-upstream origin master
 ```
 

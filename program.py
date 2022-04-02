@@ -18,8 +18,13 @@ print(albums.head())
 
 # 1. Get info (Genre, Release Year, Album Cover) from API using master id. 
 test_id = albums.iloc[0]["master_id"]
-# print(test_id)
-response = requests.get(f'https://api.discogs.com/database/search?q=Nirvana&token=abcxyz123456 --user-agent "allmusic-artist-association/1.0 +https://github.com/geraldwogan/allmusic-artist-association"')
+
+# Consumer Key & Secret from https://www.discogs.com/settings/developers
+parameters = {
+    "Consumer Key": "MyVgXQbTbpSHOQHuqWGL",
+    "Consumer Secret": "mQrzxHuAPZQMOQiqGWTboVAPWUamxrqJ"
+} 
+
+response = requests.get(f'http://api.discogs.com/oauth/request_token?key=MyVgXQbTbpSHOQHuqWGL&secret=mQrzxHuAPZQMOQiqGWTboVAPWUamxrqJ --user-agent "album-artwork-association/1.0 +https://github.com/geraldwogan/album-artwork-association"') # failing currently
 print(response.status_code)
 print(response.json())
-
