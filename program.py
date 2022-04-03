@@ -10,7 +10,7 @@ def data_cleaning(read_file):
     
     # Extract relevant content (master id from ID column of rows labeled 'Album')
     albums = read_file[read_file["Medium"]=="Album"]
-    albums["master_id"] = 'm' + albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
+    albums["master_id"] = albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
 
     # Create 'search friendly' columns for artist and album
     albums['search_artist'] = albums['Creator/Season'].str.replace(' ', '+')
