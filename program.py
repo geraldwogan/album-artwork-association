@@ -16,9 +16,11 @@ def data_cleaning(read_file):
     albums['search_artist'] = albums['Creator/Season'].str.replace(' ', '+')
     albums['search_album'] = albums['Title'].str.replace(' ', '+')
 
-    # Create tidier df with just the relevant info
+    # Create tidy df with just the relevant info
     albums = albums.loc[:,["Num", "Title", "Creator/Season", "Date Started", "Date Finished","Days", "Month", "master_id", "search_artist", "search_album"]]
+
     print(albums.head())
+
     return albums
 
 albums = data_cleaning(read_file)
@@ -50,10 +52,12 @@ if resp['status'] != '200':
     sys.exit('Invalid API response {0}.'.format(resp['status']))
 
 releases = json.loads(content.decode('utf-8'))
-print(releases)
 
+# print(releases['results'][0])
 
-to_file = json.dumps(releases, indent=2)
+master = ''
+for release in releases['results']:
+    if release['type'] == 'master':
+        master = release
 
-with open('search_out.json', 'w') as f:
-    f.write(to_file)
+print(master[''])
