@@ -60,4 +60,4 @@ for release in releases['results']:
     if release['type'] == 'master':
         master = release
 
-print(master[''])
+print(master)
