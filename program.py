@@ -46,6 +46,11 @@ resp, content = client.request(f'https://api.discogs.com/database/search?release
 if resp['status'] != '200':
     sys.exit('Invalid API response {0}.'.format(resp['status']))
 
-master = json.loads(content.decode('utf-8'))
+releases = json.loads(content.decode('utf-8'))
+print(releases)
 
-print(master)
+
+to_file = json.dumps(releases, indent=2)
+
+with open('search_out.json', 'w') as f:
+    f.write(to_file)
