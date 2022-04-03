@@ -26,12 +26,12 @@ def data_cleaning(read_file):
 albums = data_cleaning(read_file)
 
 # 1. Get info (Genre, Release Year, Album Cover) from API using master id. 
-test_id = albums.iloc[0]["master_id"]
+# test_id = albums.iloc[0]["master_id"]
 test_search_artist = albums.iloc[0]["search_artist"]
 test_search_album = albums.iloc[0]["search_album"]
 print(f'test_id: "{test_id}".')
-print(f'test_search_artist: "{test_search_artist}".')
-print(f'test_search_album: "{test_search_album}".')
+print(f'test_search_artist: "{test_search_artist}"')
+print(f'test_search_album: "{test_search_album}"')
 
 # credentials
 json_file = open("discogs_auths.json")
@@ -60,4 +60,11 @@ for release in releases['results']:
     if release['type'] == 'master':
         master = release
 
-print(master)
+# print(master)
+
+genres = master['genre']
+release_year = master['year']
+print('genres:',genres)
+print('release_year:',release_year)
+
+# album_cover = (TODO)
