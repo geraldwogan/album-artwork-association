@@ -21,6 +21,12 @@ print(albums.head())
 
 # 1. Get info (Genre, Release Year, Album Cover) from API using master id. 
 test_id = albums.iloc[0]["master_id"]
+test_search_artist = albums.iloc[0]["search_artist"]
+test_search_album = albums.iloc[0]["search_album"]
+print(f'test_id: "{test_id}".')
+print(f'test_search_artist: "{test_search_artist}".')
+print(f'test_search_album: "{test_search_album}".')
+
 
 # credentials
 json_file = open("discogs_auths.json")
@@ -33,10 +39,9 @@ consumer = oauth2.Consumer(secrets["consumer_key"], secrets["consumer_secret"])
 token = oauth2.Token(key=secrets['oauth_token'], secret=secrets['oauth_token_secret'])
 client = oauth2.Client(consumer, token)
 
-print(f'master id: "{test_id}".')
 # resp, content = client.request(f'https://api.discogs.com/masters/2452996', headers={'User-Agent': secrets['user_agent']})
 
-resp, content = client.request('https://api.discogs.com/database/search?release_title=Dawn+FM&artist=The+Weeknd', headers={'User-Agent':secrets['user_agent']})
+resp, content = client.request(f'https://api.discogs.com/database/search?release_title={test_search_album}&artist={test_search_artist}', headers={'User-Agent':secrets['user_agent']})
 
 if resp['status'] != '200':
     sys.exit('Invalid API response {0}.'.format(resp['status']))
