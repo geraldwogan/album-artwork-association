@@ -11,8 +11,12 @@ read_file = pd.read_excel('data/2021 GW Media Tracking.xlsx', sheet_name='media_
 albums = read_file[read_file["Medium"]=="Album"]
 albums["master_id"] = 'm' + albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
 
+# Create 'search friendly' columns for artist and album
+albums['search_artist'] = albums['Creator/Season'].str.replace(' ', '+')
+albums['search_album'] = albums['Title'].str.replace(' ', '+')
+
 # Create tidier df with just the relevant info
-albums = albums.loc[:,["Num", "Title", "Creator/Season", "Date Started", "Date Finished","Days", "Month", "master_id"]]
+albums = albums.loc[:,["Num", "Title", "Creator/Season", "Date Started", "Date Finished","Days", "Month", "master_id", "search_artist", "search_album"]]
 print(albums.head())
 
 # 1. Get info (Genre, Release Year, Album Cover) from API using master id. 
@@ -32,7 +36,7 @@ client = oauth2.Client(consumer, token)
 print(f'master id: "{test_id}".')
 # resp, content = client.request(f'https://api.discogs.com/masters/2452996', headers={'User-Agent': secrets['user_agent']})
 
-resp, content = client.request('https://api.discogs.com/database/search?release_title=House+For+All&artist=Blunted+Dummies', headers={'User-Agent':secrets['user_agent']})
+resp, content = client.request('https://api.discogs.com/database/search?release_title=Dawn+FM&artist=The+Weeknd', headers={'User-Agent':secrets['user_agent']})
 
 if resp['status'] != '200':
     sys.exit('Invalid API response {0}.'.format(resp['status']))
