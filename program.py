@@ -47,21 +47,14 @@ client = oauth2.Client(consumer, token)
 
 # resp, content = client.request(f'https://api.discogs.com/masters/2452996', headers={'User-Agent': secrets['user_agent']})
 
-resp, content = client.request(f'https://api.discogs.com/database/search?release_title={test_search_album}&artist={test_search_artist}', headers={'User-Agent':secrets['user_agent']})
+resp, content = client.request(f'https://api.discogs.com/database/search?release_title={test_search_album}&artist={test_search_artist}&type=master', headers={'User-Agent':secrets['user_agent']})
 
 if resp['status'] != '200':
     sys.exit('Invalid API response {0}.'.format(resp['status']))
 
 releases = json.loads(content.decode('utf-8'))
 
-# print(releases['results'][0])
-
-# Get master release
-master = ''
-for release in releases['results']:
-    if release['type'] == 'master':
-        master = release
-# print(master)
+master = releases['results'][0]
 
 # Get info (Genre, Release Year, Album Cover) from API
 genres = master['genre']
@@ -70,16 +63,15 @@ print('genres:', genres)
 print('release_year:', release_year)
 
 album_cover = master['cover_image']
+
 try:
-    # urllib.URLopener.version = secrets['user_agent']
-    # request.urlretrieve(album_cover, test_id+'album_cover')
-
-    headers={'user-agent': secrets['user_agent']}
-    r=requests.get(album_cover, headers=headers)
-
+    headers = {'user-agent': secrets['user_agent']}
+    r = requests.get(album_cover, headers=headers)
     img_type = re.findall(r'[^.]+$', album_cover)[0]
+
     with open(f"resources/{test_id}_album_cover.{img_type}", 'wb') as f:
         f.write(r.content)
+
     print(f"{test_id}_album_cover.{img_type} saved successfully in resources directory.")
 
 except Exception as e:
