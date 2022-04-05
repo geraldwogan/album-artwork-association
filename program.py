@@ -53,16 +53,16 @@ def get_data_from_api(album, client, secrets):
     
     return content
 
-def get_master_from_reponse(content):
+def get_master_from_response(content):
     releases = json.loads(content.decode('utf-8'))
 
     master = releases['results'][0]
 
     return master
 
-def get_values_from_response(album, content):
+def get_values_from_master(album, content):
 
-    master = get_master_from_reponse(content)
+    master = get_master_from_response(content)
 
     # Get info (Genre, Release Year, Album Cover) from API
     album['Genres'] = master['genre']
@@ -93,18 +93,9 @@ albums = data_cleaning(all_media)
 secrets = get_secrets()
 client = setup_auth_client()
 
-# for idx, album in albums.iterrows():
-#     print(album)
-#     content = get_data_from_api(album, client, secrets)
-#     albums_final.append(get_values_from_response(album, content))
-
-album = albums.iloc[0,:].copy()
-content = get_data_from_api(album, client, secrets)
-albums_final.append(get_values_from_response(album, content))
-
-album = albums.iloc[1,:].copy()
-content = get_data_from_api(album, client, secrets)
-albums_final.append(get_values_from_response(album, content))
+for idx, album in albums.iterrows():
+    content = get_data_from_api(album, client, secrets)
+    albums_final.append(get_master_from_response(album, content))
 
 df = pd.DataFrame(albums_final)
 
