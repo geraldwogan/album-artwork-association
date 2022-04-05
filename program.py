@@ -87,8 +87,25 @@ all_media = pd.read_excel('data/2021 GW Media Tracking.xlsx', sheet_name='media_
 
 albums = data_cleaning(all_media)
 
+albums_final = []
+
 content = get_data_from_api(albums.iloc[0])
 
-album_returned = format_data(albums.iloc[0], content)
+albums_final.append(format_data(albums.iloc[0], content))
 
-print(album_returned)
+content = get_data_from_api(albums.iloc[1])
+
+albums_final.append(format_data(albums.iloc[1], content))
+
+print(albums_final)
+
+df = pd.DataFrame(albums_final)
+
+print(df)
+
+# TODO
+# Make current list (album_returned) into a df
+# Fix Setting WithCopy errors
+# Add for loop to handle all albums
+# Add PyTest
+# Add MDc logging?
