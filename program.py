@@ -8,12 +8,12 @@ import re
 def data_cleaning(all_media):
     
     # Extract relevant content (master id from ID column of rows labeled 'Album')
-    albums = all_media[all_media["Medium"]=="Album"]
-    albums["master_id"] = albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
+    albums = all_media[all_media["Medium"]=="Album"].copy()
+    albums.loc[:,"master_id"] = albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
 
     # Create 'search friendly' columns for artist and album
-    albums['search_artist'] = albums['Creator/Season'].str.replace(' ', '+')
-    albums['search_album'] = albums['Title'].str.replace(' ', '+')
+    albums.loc[:,'search_artist'] = albums['Creator/Season'].str.replace(' ', '+')
+    albums.loc[:,'search_album'] = albums['Title'].str.replace(' ', '+')
 
     # Create tidy df with just the relevant info
     tidy_albums = albums.loc[:,["Num", "Title", "Creator/Season", "Date Started", "Date Finished","Days", "Month", "master_id", "search_artist", "search_album"]]
@@ -30,13 +30,9 @@ def get_secrets():
     return secrets
 
 def get_data_from_api(album):
-    # test values
-    test_id = album["master_id"]
-    test_search_artist = album["search_artist"]
-    test_search_album = album["search_album"]
-    print(f'test_id: "{test_id}".')
-    print(f'test_search_artist: "{test_search_artist}"')
-    print(f'test_search_album: "{test_search_album}"')
+    # values
+    print(f'search_artist: "{album["Creator/Season"]}"')
+    print(f'search_album: "{album["Title"]}"')
 
     secrets = get_secrets()
 
@@ -47,7 +43,7 @@ def get_data_from_api(album):
 
     # resp, content = client.request(f'https://api.discogs.com/masters/2452996', headers={'User-Agent': secrets['user_agent']})
 
-    resp, content = client.request(f'https://api.discogs.com/database/search?release_title={test_search_album}&artist={test_search_artist}&type=master', headers={'User-Agent':secrets['user_agent']})
+    resp, content = client.request(f'https://api.discogs.com/database/search?release_title={album["search_album"]}&artist={album["search_artist"]}&type=master', headers={'User-Agent':secrets['user_agent']})
 
     if resp['status'] != '200':
         sys.exit('Invalid API response {0}.'.format(resp['status']))
@@ -89,23 +85,14 @@ albums = data_cleaning(all_media)
 
 albums_final = []
 
-content = get_data_from_api(albums.iloc[0])
+album = albums.iloc[0,:].copy()
+content = get_data_from_api(album)
+albums_final.append(format_data(album, content))
 
-albums_final.append(format_data(albums.iloc[0], content))
-
-content = get_data_from_api(albums.iloc[1])
-
-albums_final.append(format_data(albums.iloc[1], content))
-
-print(albums_final)
+album = albums.iloc[1,:].copy()
+content = get_data_from_api(album)
+albums_final.append(format_data(album, content))
 
 df = pd.DataFrame(albums_final)
 
 print(df)
-
-# TODO
-# Make current list (album_returned) into a df
-# Fix Setting WithCopy errors
-# Add for loop to handle all albums
-# Add PyTest
-# Add MDc logging?
