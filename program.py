@@ -29,20 +29,23 @@ def get_secrets():
     json_file.close()
     return secrets
 
-def get_data_from_api(album):
-    # values
-    print(f'search_artist: "{album["Creator/Season"]}"')
-    print(f'search_album: "{album["Title"]}"')
-
-    secrets = get_secrets()
-
+def setup_auth_client():
     # create oauth token, Consumer and Client objects needed for use with the Discogs API.
     consumer = oauth2.Consumer(secrets["consumer_key"], secrets["consumer_secret"])
     token = oauth2.Token(key=secrets['oauth_token'], secret=secrets['oauth_token_secret'])
     client = oauth2.Client(consumer, token)
 
-    # resp, content = client.request(f'https://api.discogs.com/masters/2452996', headers={'User-Agent': secrets['user_agent']})
+    return client
 
+def get_data_from_api(album, client, secrets):
+    # values
+    print(f'search_album: {album["Title"]}')
+    print(f'search_artist: {album["Creator/Season"]}')
+
+    # API endpoint 'master'
+    resp, content = client.request(f'https://api.discogs.com/masters/2452996', headers={'User-Agent': secrets['user_agent']})
+
+    # API endpoint 'search'
     resp, content = client.request(f'https://api.discogs.com/database/search?release_title={album["search_album"]}&artist={album["search_artist"]}&type=master', headers={'User-Agent':secrets['user_agent']})
 
     if resp['status'] != '200':
@@ -79,18 +82,19 @@ def format_data(album, content):
 
     return album
 
+albums_final = []
 all_media = pd.read_excel('data/2021 GW Media Tracking.xlsx', sheet_name='media_tracking', engine='openpyxl')
-
 albums = data_cleaning(all_media)
 
-albums_final = []
+secrets = get_secrets()
+client = setup_auth_client()
 
 album = albums.iloc[0,:].copy()
-content = get_data_from_api(album)
+content = get_data_from_api(album, client, secrets)
 albums_final.append(format_data(album, content))
 
 album = albums.iloc[1,:].copy()
-content = get_data_from_api(album)
+content = get_data_from_api(album, client, secrets)
 albums_final.append(format_data(album, content))
 
 df = pd.DataFrame(albums_final)
