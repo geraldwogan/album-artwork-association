@@ -1,12 +1,12 @@
-import pandas as pd
 import json
-import oauth2
-import sys
-import requests
 import re
+import sys
+
+import oauth2
+import pandas as pd
+import requests
 
 def data_cleaning(all_media):
-    
     # Extract relevant content (master id from ID column of rows labeled 'Album')
     albums = all_media[all_media["Medium"]=="Album"].copy()
     albums.loc[:,"master_id"] = albums["Standardised ID"].str.extract(r'\/([0-9]{6,7})-')
@@ -24,13 +24,14 @@ def data_cleaning(all_media):
 
 def get_secrets():
     # credentials
-    json_file = open("discogs_auths.json")
+    json_file = open("resources/discog_auths.json")
     secrets = json.load(json_file)
     json_file.close()
+
     return secrets
 
 def setup_auth_client():
-    # create oauth token, Consumer and Client objects needed for use with the Discogs API.
+    # create oauth Token, Consumer and Client objects needed for use with the Discogs API.
     consumer = oauth2.Consumer(secrets["consumer_key"], secrets["consumer_secret"])
     token = oauth2.Token(key=secrets['oauth_token'], secret=secrets['oauth_token_secret'])
     client = oauth2.Client(consumer, token)
@@ -38,12 +39,11 @@ def setup_auth_client():
     return client
 
 def get_data_from_api(album, client, secrets):
-    # values
-    print(f'search_album: {album["Title"]}')
-    print(f'search_artist: {album["Creator/Season"]}')
+    # search query
+    print(f'Searching Discogs API for ... {album["Creator/Season"]} - {album["Title"]}')
 
     # API endpoint 'master'
-    resp, content = client.request(f'https://api.discogs.com/masters/2452996', headers={'User-Agent': secrets['user_agent']})
+    # resp, content = client.request(f'https://api.discogs.com/masters/{album["master_id"]}', headers={'User-Agent': secrets['user_agent']})
 
     # API endpoint 'search'
     resp, content = client.request(f'https://api.discogs.com/database/search?release_title={album["search_album"]}&artist={album["search_artist"]}&type=master', headers={'User-Agent':secrets['user_agent']})
@@ -53,31 +53,35 @@ def get_data_from_api(album, client, secrets):
     
     return content
 
-def format_data(album, content):
-
+def get_master_from_response(content):
     releases = json.loads(content.decode('utf-8'))
 
     master = releases['results'][0]
 
+    return master
+
+def get_values_from_master(album, content):
+
+    master = get_master_from_response(content)
+
     # Get info (Genre, Release Year, Album Cover) from API
-    album['genres'] = master['genre']
-    album['release_year'] = master['year']
+    album['Genres'] = master['genre']
+    album['Release Year'] = master['year']
+    img_type = re.findall(r'[^.]+$',  master['cover_image'])[0] # Get file type of image (.jpeg, .png, etc.)
+    album['Album Cover'] = f"album_covers/{album['master_id']}.{img_type}"
 
     try:
         secrets = get_secrets()
-
-        img_type = re.findall(r'[^.]+$',  master['cover_image'])[0] # Get file type of image (.jpeg, .png, etc.)
-        album['album_cover'] = f"resources/{album['master_id']}_album_cover.{img_type}"
-
         headers = {'user-agent': secrets['user_agent']}
-        r = requests.get( master['cover_image'], headers=headers)
+        req = requests.get(master['cover_image'], headers=headers)
 
-        with open(album['album_cover'], 'wb') as f:
-            f.write(r.content)
+        with open(album['Album Cover'], 'wb') as f:
+            f.write(req.content)
 
-        print(f"Image downloaded successfully to -> {album['album_cover']}")
+        print(f"Image download successful -> {album['Album Cover']}")
 
     except Exception as e:
+        album['Album Cover'] = 'Download Failure'
         sys.exit(f'Unable to download image {master["cover_image"]}, error {e}')
 
     return album
@@ -89,13 +93,9 @@ albums = data_cleaning(all_media)
 secrets = get_secrets()
 client = setup_auth_client()
 
-album = albums.iloc[0,:].copy()
-content = get_data_from_api(album, client, secrets)
-albums_final.append(format_data(album, content))
-
-album = albums.iloc[1,:].copy()
-content = get_data_from_api(album, client, secrets)
-albums_final.append(format_data(album, content))
+for idx, album in albums.iterrows():
+    content = get_data_from_api(album, client, secrets)
+    albums_final.append(get_master_from_response(album, content))
 
 df = pd.DataFrame(albums_final)
 
