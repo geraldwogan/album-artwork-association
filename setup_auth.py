@@ -1,3 +1,4 @@
+import json
 import oauth2
 import sys
 from urllib.parse import parse_qsl
@@ -22,13 +23,17 @@ The application sends the request_token and request token secret along withe the
 ### Fetching data via your access_token: 
 You're now able to fetch data using the OAuth process. For all authenticated requests, you pass the access_token and access_token secret.
 '''
+json_file = open("resources/discog_auths.json")
+secrets = json.load(json_file)
+json_file.close()
 
-consumer_key = 'MyVgXQbTbpSHOQHuqWGL'
-consumer_secret = 'mQrzxHuAPZQMOQiqGWTboVAPWUamxrqJ'
+consumer_key = secrets['consumer_key']
+consumer_secret = secrets['consumer_secret']
+user_agent = secrets['user_agent']
+
 request_token_url = 'https://api.discogs.com/oauth/request_token'
 authorize_url = 'https://www.discogs.com/oauth/authorize'
 access_token_url = 'https://api.discogs.com/oauth/access_token'
-user_agent = 'album-artwork-association/1.0'
 
 # create oauth Consumer and Client objects using
 consumer = oauth2.Consumer(consumer_key, consumer_secret)
