@@ -30,7 +30,7 @@ def get_secrets():
 
     return secrets
 
-def setup_auth_client():
+def setup_auth_client(secrets):
     # create oauth Token, Consumer and Client objects needed for use with the Discogs API.
     consumer = oauth2.Consumer(secrets["consumer_key"], secrets["consumer_secret"])
     token = oauth2.Token(key=secrets['oauth_token'], secret=secrets['oauth_token_secret'])
@@ -92,7 +92,7 @@ def main():
     albums = data_cleaning(all_media)
 
     secrets = get_secrets()
-    client = setup_auth_client()
+    client = setup_auth_client(secrets)
 
     for idx, album in albums.iterrows():
         content = get_data_from_api(album, client, secrets)
