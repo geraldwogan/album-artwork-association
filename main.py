@@ -30,7 +30,7 @@ def get_secrets():
 
     return secrets
 
-def setup_auth_client():
+def setup_auth_client(secrets):
     # create oauth Token, Consumer and Client objects needed for use with the Discogs API.
     consumer = oauth2.Consumer(secrets["consumer_key"], secrets["consumer_secret"])
     token = oauth2.Token(key=secrets['oauth_token'], secret=secrets['oauth_token_secret'])
@@ -86,17 +86,21 @@ def get_values_from_master(album, content):
 
     return album
 
-albums_final = []
-all_media = pd.read_excel('data/2021 GW Media Tracking.xlsx', sheet_name='media_tracking', engine='openpyxl')
-albums = data_cleaning(all_media)
+def main():
+    albums_final = []
+    all_media = pd.read_excel('data/2021 GW Media Tracking.xlsx', sheet_name='media_tracking', engine='openpyxl')
+    albums = data_cleaning(all_media)
 
-secrets = get_secrets()
-client = setup_auth_client()
+    secrets = get_secrets()
+    client = setup_auth_client(secrets)
 
-for idx, album in albums.iterrows():
-    content = get_data_from_api(album, client, secrets)
-    albums_final.append(get_master_from_response(album, content))
+    for idx, album in albums.iterrows():
+        content = get_data_from_api(album, client, secrets)
+        albums_final.append(get_master_from_response(album, content))
 
-df = pd.DataFrame(albums_final)
+    df = pd.DataFrame(albums_final)
 
-print(df)
+    print(df)
+
+if __name__ == '__main__':
+    main()
