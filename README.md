@@ -13,32 +13,3 @@
 |The Green Mile|Frank Darabont|
 |Jurassic Park|Steven Spielberg|
 |Home Alone|Chris Columbus|
-
-## Git Initiliazation
-https://gist.github.com/alexpchin/102854243cd066f8b88e
-
-1. Create directory on local
-1. Create identical repo on remote (GitHub)
-1. Follow these commands
-```
-$ git init
-$ git add README.md
-$ git commit -m "first commit"
-$ git remote add origin https://github.com/geraldwogan/album-artwork-association.git
-$ git push --set-upstream origin master
-```
-
-## Virtual Env init
-```
-$ python -m venv venv
-$ echo /venv/ >> .gitignore
-$ venv\scripts\activate
-(venv) $ pip install ...
-(venv) $ deactivate
-$ pip freeze > requirements.txt (Run this each time you install a new package)
-```
-
-## Using APIs in Python
-- https://www.dataquest.io/blog/python-api-tutorial/
-- https://www.discogs.com/developers/#
-- More info: get_discog_auth.py file
