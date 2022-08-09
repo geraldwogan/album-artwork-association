@@ -3,3 +3,5 @@
 /resources/
 
 /album_covers/
+
+__pycache__
